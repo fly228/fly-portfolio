@@ -1,29 +1,48 @@
+import { useRef } from "react";
 import { projects } from "../data/projects";
+import { IconButton } from "./Button";
 
 export function SelectedWork() {
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  function scrollByCard(dir: 1 | -1) {
+    const track = trackRef.current;
+    if (!track) return;
+    const card = track.querySelector("article");
+    const cardWidth = card ? card.getBoundingClientRect().width + 24 : 380;
+    track.scrollBy({ left: dir * cardWidth, behavior: "smooth" });
+  }
+
   return (
     <section className="px-6 md:px-12 py-24 bg-paper text-ink">
-      <h2 className="text-3xl md:text-4xl tracking-tight max-w-2xl mb-12">
-        Selected work
-      </h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="flex items-end justify-between mb-10">
+        <h2 className="text-3xl md:text-4xl tracking-tight">Selected work</h2>
+        <div className="hidden md:flex gap-3">
+          <IconButton direction="left" label="Previous project" onClick={() => scrollByCard(-1)} />
+          <IconButton direction="right" label="Next project" onClick={() => scrollByCard(1)} />
+        </div>
+      </div>
+
+      <div
+        ref={trackRef}
+        className="flex gap-6 overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-6 px-6 md:-mx-12 md:px-12"
+      >
         {projects.map((p) => (
           <article
             key={p.slug}
-            className="group relative border border-ink/10 rounded-none overflow-hidden"
+            className="group relative border border-ink/10 overflow-hidden snap-start shrink-0 w-[82%] sm:w-[60%] md:w-[38%] lg:w-[30%]"
+            data-cursor="hover"
           >
-            <div className="aspect-[4/3] bg-ink/5 flex items-center justify-center relative">
+            <div className="aspect-[4/3] bg-ink/5 flex items-center justify-center relative overflow-hidden">
               {p.cover ? (
                 <img
                   src={p.cover}
                   alt={p.titleEn}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               ) : (
                 <span className="text-xs text-ink/40 px-4 text-center">
-                  {p.status === "pending-assets"
-                    ? "Placeholder — real design assets pending"
-                    : "Placeholder — cover image pending"}
+                  Placeholder, cover pending
                 </span>
               )}
               {p.status === "pending-assets" && (
@@ -41,6 +60,11 @@ export function SelectedWork() {
             </div>
           </article>
         ))}
+      </div>
+
+      <div className="flex md:hidden gap-3 mt-6">
+        <IconButton direction="left" label="Previous project" onClick={() => scrollByCard(-1)} />
+        <IconButton direction="right" label="Next project" onClick={() => scrollByCard(1)} />
       </div>
     </section>
   );

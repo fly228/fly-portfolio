@@ -75,22 +75,27 @@ export function HeatHero() {
       }
     }
 
+    // Deterministic pseudo-random hash, not a smooth wave, so the ambient
+    // flicker reads as scattered noise instead of a repeating blob pattern.
+    function hash(x: number, y: number): number {
+      const v = Math.sin(x * 127.1 + y * 311.7) * 43758.5453;
+      return v - Math.floor(v);
+    }
+
     function step() {
       t += 1;
       const mcx = Math.floor(mouse.x / cell);
       const mcy = Math.floor(mouse.y / cell);
       const radius = 6;
+      const noiseFrame = Math.floor(t / 50);
 
       for (let cy = 0; cy < rows; cy++) {
         for (let cx = 0; cx < cols; cx++) {
           const i = cy * cols + cx;
           heat[i] *= 0.93;
 
-          const ambient =
-            (Math.sin(cx * 0.35 + t * 0.02) + Math.cos(cy * 0.4 - t * 0.017)) *
-              0.5 +
-            0.5;
-          if (ambient > 0.965) heat[i] = Math.max(heat[i], 0.22);
+          const n = hash(cx, cy * 7.13 + noiseFrame * 0.61);
+          if (n > 0.988) heat[i] = Math.max(heat[i], 0.2 + n * 0.05);
 
           if (mouse.x > -500) {
             const dx = cx - mcx;
@@ -139,8 +144,8 @@ export function HeatHero() {
 
   return (
     <section className="relative w-full min-h-[100dvh] bg-paper text-ink overflow-hidden">
-      <div className="relative z-10 flex flex-col md:flex-row md:items-start md:justify-between gap-6 px-6 md:px-12 pt-24 pb-8">
-        <h1 className="text-5xl md:text-7xl tracking-tighter leading-none font-semibold">
+      <div className="relative z-10 flex flex-col md:flex-row md:items-start md:justify-between gap-4 md:gap-6 px-6 md:px-12 pt-20 md:pt-24 pb-8">
+        <h1 className="text-4xl sm:text-5xl md:text-7xl tracking-tighter leading-none font-semibold">
           FLY WENG,
           <br />
           ENGINEERED.
@@ -153,7 +158,7 @@ export function HeatHero() {
       </div>
       <canvas
         ref={canvasRef}
-        className="absolute inset-x-0 bottom-0 top-[220px] md:top-[260px] w-full"
+        className="absolute inset-x-0 bottom-0 top-[300px] sm:top-[280px] md:top-[220px] w-full"
         aria-hidden="true"
       />
     </section>

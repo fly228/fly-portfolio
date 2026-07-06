@@ -5,3 +5,57 @@
 html {
   background: #fafaf8;
 }
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+body.has-custom-cursor,
+body.has-custom-cursor a,
+body.has-custom-cursor button {
+  cursor: none;
+}
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  border-radius: 9999px;
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: #101014;
+}
+
+.cursor-ring {
+  width: 32px;
+  height: 32px;
+  margin: -16px 0 0 -16px;
+  border: 1px solid rgba(16, 16, 20, 0.4);
+  transition: transform 120ms ease-out, width 180ms ease, height 180ms ease,
+    margin 180ms ease, background 180ms ease;
+}
+
+.cursor-ring--active {
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+  background: rgba(16, 16, 20, 0.06);
+  border-color: rgba(16, 16, 20, 0.15);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-ring {
+    transition: none;
+  }
+}
