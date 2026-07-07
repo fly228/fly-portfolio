@@ -6,6 +6,45 @@ html {
   background: #fafaf8;
 }
 
+/* Site-wide graph-paper grid lines (not dots, actual thin lines) so no
+   section ever reads as flat dead space. Visible but quiet: light gray on
+   the paper background, echoing the texture used across craft.wild.as.
+   IMPORTANT: no section may paint its own opaque background color (e.g.
+   bg-paper) on top of this - that was the bug that made the grid invisible
+   everywhere. Sections stay transparent and let this show through. */
+body {
+  background-color: #fafaf8;
+  background-image: linear-gradient(to right, rgba(16, 16, 20, 0.09) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(16, 16, 20, 0.09) 1px, transparent 1px);
+  background-size: 24px 24px;
+  letter-spacing: 0.01em;
+}
+
+/* Reusable "pixel notch" corner, a stepped chamfer instead of a rounded or
+   square corner. Generic clip-path geometry (same technique as the notched
+   buttons on craft.wild.as), sized down for our smaller controls. */
+.pixel-notch {
+  clip-path: polygon(
+    8px 0, calc(100% - 8px) 0, calc(100% - 8px) 4px, calc(100% - 4px) 4px,
+    calc(100% - 4px) 8px, 100% 8px, 100% calc(100% - 8px),
+    calc(100% - 4px) calc(100% - 8px), calc(100% - 4px) calc(100% - 4px),
+    calc(100% - 8px) calc(100% - 4px), calc(100% - 8px) 100%, 8px 100%,
+    8px calc(100% - 4px), 4px calc(100% - 4px), 4px calc(100% - 8px),
+    0 calc(100% - 8px), 0 8px, 4px 8px, 4px 4px, 8px 4px, 8px 0
+  );
+}
+
+.pixel-notch-sm {
+  clip-path: polygon(
+    5px 0, calc(100% - 5px) 0, calc(100% - 5px) 2.5px, calc(100% - 2.5px) 2.5px,
+    calc(100% - 2.5px) 5px, 100% 5px, 100% calc(100% - 5px),
+    calc(100% - 2.5px) calc(100% - 5px), calc(100% - 2.5px) calc(100% - 2.5px),
+    calc(100% - 5px) calc(100% - 2.5px), calc(100% - 5px) 100%, 5px 100%,
+    5px calc(100% - 2.5px), 2.5px calc(100% - 2.5px), 2.5px calc(100% - 5px),
+    0 calc(100% - 5px), 0 5px, 2.5px 5px, 2.5px 2.5px, 5px 2.5px, 5px 0
+  );
+}
+
 .no-scrollbar {
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -27,7 +66,6 @@ body.has-custom-cursor button {
   left: 0;
   pointer-events: none;
   z-index: 9999;
-  border-radius: 9999px;
 }
 
 .cursor-dot {
@@ -37,25 +75,64 @@ body.has-custom-cursor button {
   background: #101014;
 }
 
+/* Small notched square instead of a smooth circle, matching the pixel/
+   chamfer language used on buttons rather than a generic round cursor. */
 .cursor-ring {
-  width: 32px;
-  height: 32px;
-  margin: -16px 0 0 -16px;
+  width: 28px;
+  height: 28px;
+  margin: -14px 0 0 -14px;
   border: 1px solid rgba(16, 16, 20, 0.4);
+  clip-path: polygon(
+    6px 0, calc(100% - 6px) 0, calc(100% - 6px) 3px, calc(100% - 3px) 3px,
+    calc(100% - 3px) 6px, 100% 6px, 100% calc(100% - 6px),
+    calc(100% - 3px) calc(100% - 6px), calc(100% - 3px) calc(100% - 3px),
+    calc(100% - 6px) calc(100% - 3px), calc(100% - 6px) 100%, 6px 100%,
+    6px calc(100% - 3px), 3px calc(100% - 3px), 3px calc(100% - 6px),
+    0 calc(100% - 6px), 0 6px, 3px 6px, 3px 3px, 6px 3px, 6px 0
+  );
   transition: transform 120ms ease-out, width 180ms ease, height 180ms ease,
     margin 180ms ease, background 180ms ease;
 }
 
 .cursor-ring--active {
-  width: 56px;
-  height: 56px;
-  margin: -28px 0 0 -28px;
+  width: 48px;
+  height: 48px;
+  margin: -24px 0 0 -24px;
   background: rgba(16, 16, 20, 0.06);
   border-color: rgba(16, 16, 20, 0.15);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .cursor-ring {
+    transition: none;
+  }
+}
+
+/* Pixel-mosaic hover reveal for work cards: a grid of small tiles fades in
+   with a staggered, stepped (non-eased) timing, then the CTA label appears
+   on top. Approximates the pixel-dissolve hover on craft.wild.as using
+   plain CSS tiles rather than processing the image itself. */
+.pixel-tile {
+  opacity: 0;
+  transition: opacity 0.25s steps(3);
+  transition-delay: calc(var(--tile-i, 0) * 18ms);
+}
+.group:hover .pixel-tile {
+  opacity: var(--tile-o, 0.5);
+}
+.reveal-label {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.2s steps(3), transform 0.2s steps(3);
+  transition-delay: 0.25s;
+}
+.group:hover .reveal-label {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .pixel-tile,
+  .reveal-label {
     transition: none;
   }
 }

@@ -12,7 +12,7 @@ export function Button({
   onClick?: () => void;
 }) {
   const base =
-    "inline-flex items-center gap-2 px-5 py-3 text-sm tracking-tight transition-transform active:scale-[0.97]";
+    "pixel-notch inline-flex items-center gap-2 px-5 py-3 text-sm tracking-wide transition-transform active:scale-[0.97]";
   const styles =
     variant === "primary"
       ? "bg-ink text-paper hover:bg-ink/85"
@@ -59,7 +59,7 @@ export function IconButton({
       onClick={onClick}
       aria-label={label}
       data-cursor="hover"
-      className="w-11 h-11 flex items-center justify-center rounded-full bg-ink text-paper hover:bg-ink/85 transition-transform active:scale-[0.94]"
+      className="pixel-notch w-11 h-11 flex items-center justify-center bg-ink text-paper hover:bg-ink/85 transition-transform active:scale-[0.94]"
     >
       <span aria-hidden="true">{direction === "left" ? "←" : "→"}</span>
     </button>

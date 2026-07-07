@@ -4,9 +4,9 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="px-6 md:px-12 py-24 bg-paper text-ink border-t border-ink/10"
+      className="px-6 md:px-12 py-24 text-ink border-t border-ink/10"
     >
-      <h2 className="text-3xl md:text-4xl tracking-tight mb-8">Contact</h2>
+      <h2 className="text-3xl md:text-4xl tracking-normal mb-8">Contact</h2>
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
         <Button href="mailto:fly228999@gmail.com">Say hello</Button>
         <div className="flex flex-col gap-1 text-sm text-ink/60">

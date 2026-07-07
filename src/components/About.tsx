@@ -1,29 +1,32 @@
-import { skillGroups } from "../data/experience";
+import { skillCategories } from "../data/experience";
+import { PixelFlow } from "./PixelFlow";
 
 export function About() {
   return (
-    <section className="px-6 md:px-12 py-24 bg-paper text-ink border-t border-ink/10">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-        <div>
-          <h2 className="text-3xl md:text-4xl tracking-tight mb-6">About</h2>
-          <p className="text-ink/70 leading-relaxed max-w-[60ch]">
-            具 10+ 年視覺、動態影像與科技簡報設計經驗，轉化為高階主管、客戶提案與大型活動可快速理解的視覺敘事。熟悉從資訊架構、版面系統、動態節奏到交付製作的完整流程，能在高壓時程中維持品質與品牌一致性。曾與政府、電信、港務單位與大型活動合作。
-          </p>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {skillGroups.map((g) => (
-            <div key={g.title}>
-              <h3 className="text-sm text-ink/40 mb-3">{g.title}</h3>
-              <ul className="space-y-1">
-                {g.items.map((item) => (
-                  <li key={item} className="text-sm text-ink/80">
-                    {item}
-                  </li>
-                ))}
-              </ul>
+    <section className="px-6 md:px-12 py-24 text-ink border-t border-ink/10">
+      <div className="max-w-2xl mb-12">
+        <h2 className="text-3xl md:text-4xl tracking-normal mb-4">About</h2>
+        <p className="text-ink/70 leading-relaxed text-justify">
+          10+ 年視覺、動態影像與科技簡報設計經驗，曾與政府、電信、港務單位與大型活動合作，專長是把複雜資訊拆解成清楚的視覺順序。
+        </p>
+      </div>
+
+      <div className="mb-10 -mx-6 md:-mx-12 px-6 md:px-12 overflow-x-auto no-scrollbar">
+        <PixelFlow />
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {skillCategories.map((s) => (
+          <div key={s.number}>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="pixel-notch-sm bg-ink text-paper text-[11px] w-6 h-6 flex items-center justify-center shrink-0">
+                {s.number}
+              </span>
+              <p className="font-medium">{s.title}</p>
             </div>
-          ))}
-        </div>
+            <p className="text-sm text-ink/60 leading-relaxed">{s.desc}</p>
+          </div>
+        ))}
       </div>
     </section>
   );

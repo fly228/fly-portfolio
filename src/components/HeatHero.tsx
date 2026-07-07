@@ -143,9 +143,9 @@ export function HeatHero() {
   }, []);
 
   return (
-    <section className="relative w-full min-h-[100dvh] bg-paper text-ink overflow-hidden">
+    <section className="relative w-full min-h-[100dvh] text-ink overflow-hidden">
       <div className="relative z-10 flex flex-col md:flex-row md:items-start md:justify-between gap-4 md:gap-6 px-6 md:px-12 pt-20 md:pt-24 pb-8">
-        <h1 className="text-4xl sm:text-5xl md:text-7xl tracking-tighter leading-none font-semibold">
+        <h1 className="text-4xl sm:text-5xl md:text-7xl tracking-normal leading-none font-semibold">
           FLY WENG,
           <br />
           ENGINEERED.
