@@ -1,13 +1,9 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Cursor-reactive pixel heat grid, modeled on craft.wild.as's hero background.
- *
- * Mechanic: each cell in a coarse grid holds a "heat" value that decays every
- * frame, gets a faint ambient flicker from a drifting noise field, and gets a
- * strong boost when the cursor passes near it. Heat is color-mapped through a
- * discrete cold -> hot palette (navy, blue, gold, red, pale yellow).
- *
+ * Hero: fine 8px pixel grid (hero-only, see index.css) + cursor-reactive
+ * heat canvas. Each cell holds a heat value that decays per frame, flickers
+ * faintly from a noise field, and boosts when the cursor passes near it.
  * Respects prefers-reduced-motion by rendering a single static frame.
  */
 export function HeatHero() {
@@ -75,8 +71,6 @@ export function HeatHero() {
       }
     }
 
-    // Deterministic pseudo-random hash, not a smooth wave, so the ambient
-    // flicker reads as scattered noise instead of a repeating blob pattern.
     function hash(x: number, y: number): number {
       const v = Math.sin(x * 127.1 + y * 311.7) * 43758.5453;
       return v - Math.floor(v);
@@ -144,21 +138,33 @@ export function HeatHero() {
 
   return (
     <section className="relative w-full min-h-[100dvh] text-ink overflow-hidden">
-      <div className="relative z-10 flex flex-col md:flex-row md:items-start md:justify-between gap-4 md:gap-6 px-6 md:px-12 pt-20 md:pt-24 pb-8">
-        <h1 className="text-4xl sm:text-5xl md:text-7xl tracking-normal leading-none font-semibold">
-          FLY WENG,
-          <br />
-          ENGINEERED.
-        </h1>
-        <p className="max-w-xs text-sm text-ink/70 md:text-right">
-          UI Visual Designer / Presentation Designer / Tech Visual
-          Storytelling. 10+ years turning complex briefs into visuals
-          executives and clients read instantly.
-        </p>
+      {/* Fine 8px grid, confined to the hero. Other sections stay clean. */}
+      <div className="hero-grid absolute inset-0" aria-hidden="true" />
+
+      <div className="relative z-10 px-6 md:px-12 pt-6">
+        <p className="text-sm font-medium tracking-wide">Fly Weng</p>
       </div>
+
+      <div className="relative z-10 flex flex-col md:flex-row md:items-end md:justify-between gap-6 px-6 md:px-12 pt-16 md:pt-24 pb-4">
+        <h1 className="text-4xl sm:text-5xl md:text-7xl tracking-normal leading-tight font-semibold">
+          把複雜的事，
+          <br />
+          講到一眼看懂。
+        </h1>
+        <div className="max-w-xs md:text-right md:pb-2">
+          <p className="text-sm text-ink/70 leading-relaxed">
+            UI、簡報與動態影像設計。十多年替科技與公部門專案，把難講的內容變成看得懂的畫面。
+          </p>
+        </div>
+      </div>
+
+      <p className="relative z-10 px-6 md:px-12 pb-6 text-sm text-ink/50">
+        口說無憑，先看作品：
+      </p>
+
       <canvas
         ref={canvasRef}
-        className="absolute inset-x-0 bottom-0 top-[300px] sm:top-[280px] md:top-[220px] w-full"
+        className="absolute inset-x-0 bottom-0 top-[340px] sm:top-[320px] md:top-[300px] w-full"
         aria-hidden="true"
       />
     </section>

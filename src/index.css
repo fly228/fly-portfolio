@@ -6,23 +6,23 @@ html {
   background: #fafaf8;
 }
 
-/* Site-wide graph-paper grid lines (not dots, actual thin lines) so no
-   section ever reads as flat dead space. Visible but quiet: light gray on
-   the paper background, echoing the texture used across craft.wild.as.
-   IMPORTANT: no section may paint its own opaque background color (e.g.
-   bg-paper) on top of this - that was the bug that made the grid invisible
-   everywhere. Sections stay transparent and let this show through. */
 body {
   background-color: #fafaf8;
-  background-image: linear-gradient(to right, rgba(16, 16, 20, 0.09) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(16, 16, 20, 0.09) 1px, transparent 1px);
-  background-size: 24px 24px;
   letter-spacing: 0.01em;
 }
 
+/* Fine pixel grid, HERO ONLY (matches craft.wild.as: the grid is a hero
+   marker, every other section stays clean white and separates itself with
+   whitespace rhythm). 8px unit, very low contrast, painted by an absolutely
+   positioned layer inside the hero section, never on body. */
+.hero-grid {
+  background-image: linear-gradient(to right, rgba(16, 16, 20, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(16, 16, 20, 0.07) 1px, transparent 1px);
+  background-size: 8px 8px;
+}
+
 /* Reusable "pixel notch" corner, a stepped chamfer instead of a rounded or
-   square corner. Generic clip-path geometry (same technique as the notched
-   buttons on craft.wild.as), sized down for our smaller controls. */
+   square corner (same clip-path technique as craft.wild.as buttons). */
 .pixel-notch {
   clip-path: polygon(
     8px 0, calc(100% - 8px) 0, calc(100% - 8px) 4px, calc(100% - 4px) 4px,
@@ -53,6 +53,7 @@ body {
   display: none;
 }
 
+/* ---- Custom cursor (explicit brief requirement: mirror craft.wild.as) ---- */
 body.has-custom-cursor,
 body.has-custom-cursor a,
 body.has-custom-cursor button {
@@ -75,8 +76,6 @@ body.has-custom-cursor button {
   background: #101014;
 }
 
-/* Small notched square instead of a smooth circle, matching the pixel/
-   chamfer language used on buttons rather than a generic round cursor. */
 .cursor-ring {
   width: 28px;
   height: 28px;
@@ -108,31 +107,50 @@ body.has-custom-cursor button {
   }
 }
 
-/* Pixel-mosaic hover reveal for work cards: a grid of small tiles fades in
-   with a staggered, stepped (non-eased) timing, then the CTA label appears
-   on top. Approximates the pixel-dissolve hover on craft.wild.as using
-   plain CSS tiles rather than processing the image itself. */
+/* ---- Work-card hover: edge pixel dissolve + sliding gradient CTA ----
+   Tiles are confined to the image's edge band and colored by sampling the
+   actual pixel at that tile's position (see PixelEdgeHover.tsx). The CTA is
+   a five-step bottom gradient that slides up with stepped timing, exactly
+   the mechanic measured on craft.wild.as. The image center stays clean. */
 .pixel-tile {
   opacity: 0;
-  transition: opacity 0.25s steps(3);
-  transition-delay: calc(var(--tile-i, 0) * 18ms);
+  transition: opacity 0.3s steps(3);
+  transition-delay: calc(var(--tile-d, 0) * 1ms);
 }
-.group:hover .pixel-tile {
-  opacity: var(--tile-o, 0.5);
-}
-.reveal-label {
-  opacity: 0;
-  transform: translateY(6px);
-  transition: opacity 0.2s steps(3), transform 0.2s steps(3);
-  transition-delay: 0.25s;
-}
-.group:hover .reveal-label {
+.group:hover .pixel-tile,
+.group:focus-within .pixel-tile {
   opacity: 1;
+}
+
+.cta-slide {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 70px;
+  background: linear-gradient(
+    to top,
+    rgba(10, 10, 10, 0.8) 0,
+    rgba(10, 10, 10, 0.8) 14px,
+    rgba(10, 10, 10, 0.52) 14px,
+    rgba(10, 10, 10, 0.52) 28px,
+    rgba(10, 10, 10, 0.28) 28px,
+    rgba(10, 10, 10, 0.28) 42px,
+    rgba(10, 10, 10, 0.1) 42px,
+    rgba(10, 10, 10, 0.1) 56px,
+    rgba(10, 10, 10, 0) 56px
+  );
+  transform: translateY(100%);
+  transition: transform 0.5s steps(4);
+}
+.group:hover .cta-slide,
+.group:focus-within .cta-slide {
   transform: translateY(0);
 }
+
 @media (prefers-reduced-motion: reduce) {
   .pixel-tile,
-  .reveal-label {
+  .cta-slide {
     transition: none;
   }
 }

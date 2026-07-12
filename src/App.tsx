@@ -1,21 +1,34 @@
-import { HeatHero } from "./components/HeatHero";
-import { SelectedWork } from "./components/SelectedWork";
-import { Philosophy } from "./components/Philosophy";
-import { About } from "./components/About";
-import { Experience } from "./components/Experience";
-import { Contact } from "./components/Contact";
+import { useEffect, useState } from "react";
+import { Home } from "./pages/Home";
+import { WorkDetail } from "./pages/WorkDetail";
 import { CustomCursor } from "./components/CustomCursor";
 
+/**
+ * Minimal hash router: "#/" is home, "#/work/<slug>" is a case page.
+ * Hash routing keeps the site deployable anywhere (GitHub Pages, Vercel,
+ * plain file server) without rewrite rules.
+ */
+function useHashRoute(): string {
+  const [hash, setHash] = useState(() => window.location.hash);
+  useEffect(() => {
+    const onChange = () => {
+      setHash(window.location.hash);
+      window.scrollTo(0, 0);
+    };
+    window.addEventListener("hashchange", onChange);
+    return () => window.removeEventListener("hashchange", onChange);
+  }, []);
+  return hash;
+}
+
 export default function App() {
+  const hash = useHashRoute();
+  const workMatch = hash.match(/^#\/work\/([\w-]+)/);
+
   return (
     <main>
       <CustomCursor />
-      <HeatHero />
-      <SelectedWork />
-      <Philosophy />
-      <About />
-      <Experience />
-      <Contact />
+      {workMatch ? <WorkDetail slug={workMatch[1]} /> : <Home />}
     </main>
   );
 }

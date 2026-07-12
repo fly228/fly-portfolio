@@ -3,7 +3,11 @@ import { experience } from "../data/experience";
 export function Experience() {
   return (
     <section className="px-6 md:px-12 py-24 text-ink">
-      <h2 className="text-3xl md:text-4xl tracking-normal mb-12">Experience</h2>
+      <h2 className="text-3xl md:text-4xl tracking-normal mb-12 leading-snug">
+        十四年，六個團隊，
+        <br className="md:hidden" />
+        同一件事。
+      </h2>
       <div className="divide-y divide-ink/10">
         {experience.map((job) => (
           <div

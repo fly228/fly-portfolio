@@ -5,9 +5,13 @@ export function About() {
   return (
     <section className="px-6 md:px-12 py-24 text-ink border-t border-ink/10">
       <div className="max-w-2xl mb-12">
-        <h2 className="text-3xl md:text-4xl tracking-normal mb-4">About</h2>
-        <p className="text-ink/70 leading-relaxed text-justify">
-          10+ 年視覺、動態影像與科技簡報設計經驗，曾與政府、電信、港務單位與大型活動合作，專長是把複雜資訊拆解成清楚的視覺順序。
+        <h2 className="text-3xl md:text-4xl tracking-normal mb-4 leading-snug">
+          三種媒材，
+          <br className="md:hidden" />
+          同一套方法。
+        </h2>
+        <p className="text-ink/70 leading-relaxed">
+          簡報、介面、動態影像。媒材一直在換，工作方法沒變：先把資訊拆開，排出順序，再決定畫面長什麼樣子。
         </p>
       </div>
 
