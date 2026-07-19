@@ -59,8 +59,8 @@ export function SelectedWork() {
                     素材整理中
                   </span>
                 )}
-                <div className="cta-slide flex items-end">
-                  <span className="text-paper text-sm tracking-wide px-4 pb-3 flex items-center gap-2">
+                <div className="cta-slide z-10 flex items-end justify-center">
+                  <span className="text-paper text-sm tracking-wide pb-3 flex items-center gap-2">
                     查看案例 <span aria-hidden="true">↗</span>
                   </span>
                 </div>

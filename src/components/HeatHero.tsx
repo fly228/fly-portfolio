@@ -159,7 +159,7 @@ export function HeatHero() {
       </div>
 
       <p className="relative z-10 px-6 md:px-12 pb-6 text-sm text-ink/50">
-        口說無憑，先看作品：
+        作品自己會說話，往下看：
       </p>
 
       <canvas

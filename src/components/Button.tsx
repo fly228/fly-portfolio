@@ -59,7 +59,7 @@ export function IconButton({
       onClick={onClick}
       aria-label={label}
       data-cursor="hover"
-      className="pixel-notch w-11 h-11 flex items-center justify-center bg-ink text-paper hover:bg-ink/85 transition-transform active:scale-[0.94]"
+      className="pixel-notch w-11 h-11 flex items-center justify-center bg-ink text-paper hover:bg-[#3d5fce] transition-colors active:scale-[0.94]"
     >
       <span aria-hidden="true">{direction === "left" ? "←" : "→"}</span>
     </button>

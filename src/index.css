@@ -107,21 +107,10 @@ body.has-custom-cursor button {
   }
 }
 
-/* ---- Work-card hover: edge pixel dissolve + sliding gradient CTA ----
-   Tiles are confined to the image's edge band and colored by sampling the
-   actual pixel at that tile's position (see PixelEdgeHover.tsx). The CTA is
-   a five-step bottom gradient that slides up with stepped timing, exactly
-   the mechanic measured on craft.wild.as. The image center stays clean. */
-.pixel-tile {
-  opacity: 0;
-  transition: opacity 0.3s steps(3);
-  transition-delay: calc(var(--tile-d, 0) * 1ms);
-}
-.group:hover .pixel-tile,
-.group:focus-within .pixel-tile {
-  opacity: 1;
-}
-
+/* ---- Work-card hover ----
+   Animated mosaic wave is canvas-drawn on the top layer (PixelEdgeHover.tsx);
+   the image center keeps a clear radius so it stays readable. The CTA is a
+   stepped bottom-gradient card that slides up, text centered. */
 .cta-slide {
   position: absolute;
   left: 0;
@@ -149,7 +138,6 @@ body.has-custom-cursor button {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pixel-tile,
   .cta-slide {
     transition: none;
   }

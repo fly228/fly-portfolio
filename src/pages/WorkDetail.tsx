@@ -1,28 +1,79 @@
 import { useEffect } from "react";
 import { projects, projectBySlug } from "../data/projects";
-import type { ProjectMedia } from "../data/projects";
+import type { MediaSpan, ProjectMedia } from "../data/projects";
+
+/**
+ * Case-page media grid, after wild.as/work/*: a 12-column grid with mixed
+ * block widths (full / 2/3 / half / 1/3) so pages read big–small–big
+ * instead of a flat stack. Mobile collapses to a single column.
+ */
+const SPAN_CLASS: Record<MediaSpan, string> = {
+  full: "md:col-span-12",
+  wide: "md:col-span-8",
+  half: "md:col-span-6",
+  third: "md:col-span-4",
+};
+
+/** Colour-plan strip: flat vertical bands, like the reference site's palette tile. */
+function PaletteBlock({ media }: { media: ProjectMedia }) {
+  const swatches = media.swatches ?? [];
+  return (
+    <figure className="h-full flex flex-col">
+      <div className="flex flex-1 min-h-[180px]">
+        {swatches.map((hex) => (
+          <div
+            key={hex}
+            className="flex-1 flex items-end justify-center pb-2"
+            style={{ backgroundColor: hex }}
+          >
+            <span
+              className="text-[9px] tracking-wide opacity-70 [writing-mode:vertical-rl]"
+              style={{ color: isLight(hex) ? "#1b2333" : "#ffffff" }}
+            >
+              {hex}
+            </span>
+          </div>
+        ))}
+      </div>
+      {media.caption ? (
+        <figcaption className="text-xs text-ink/50 mt-2">{media.caption}</figcaption>
+      ) : null}
+    </figure>
+  );
+}
+
+function isLight(hex: string): boolean {
+  const n = parseInt(hex.slice(1), 16);
+  const r = (n >> 16) & 255;
+  const g = (n >> 8) & 255;
+  const b = n & 255;
+  return r * 0.299 + g * 0.587 + b * 0.114 > 150;
+}
 
 function MediaBlock({ media, eager = false }: { media: ProjectMedia; eager?: boolean }) {
   const aspect = media.aspect ?? "aspect-video";
+  if (media.type === "palette") return <PaletteBlock media={media} />;
   return (
-    <figure>
+    <figure className="h-full flex flex-col">
       {media.src ? (
         <img
           src={media.src}
-          alt={media.caption}
+          alt={media.caption ?? ""}
           loading={eager ? "eager" : "lazy"}
           className={`${aspect} w-full object-cover bg-ink/5`}
         />
       ) : (
         <div
-          className={`${aspect} w-full bg-ink/[0.04] border border-ink/10 flex items-center justify-center`}
+          className={`${aspect} w-full flex-1 bg-ink/[0.04] border border-ink/10 flex items-center justify-center`}
         >
           <span className="pixel-notch-sm bg-ink/10 text-ink/50 text-xs px-3 py-1.5 tracking-wide">
             待圖
           </span>
         </div>
       )}
-      <figcaption className="text-xs text-ink/50 mt-2">{media.caption}</figcaption>
+      {media.caption ? (
+        <figcaption className="text-xs text-ink/50 mt-2">{media.caption}</figcaption>
+      ) : null}
     </figure>
   );
 }
@@ -115,13 +166,31 @@ export function WorkDetail({ slug }: { slug: string }) {
               <dd className="text-sm text-ink/80">{value}</dd>
             </div>
           ))}
+          {project.videoUrl ? (
+            <div className="py-3">
+              <dt className="text-xs text-ink/40 mb-0.5">影片</dt>
+              <dd className="text-sm">
+                <a
+                  href={project.videoUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  data-cursor="hover"
+                  className="underline underline-offset-4 text-ink/80 hover:text-ink"
+                >
+                  觀看完整影片 ↗
+                </a>
+              </dd>
+            </div>
+          ) : null}
         </dl>
       </div>
 
-      {/* Media stack */}
-      <div className="px-6 md:px-12 space-y-12 mb-24">
+      {/* Media grid: 12 columns, mixed spans, tight gutters like the reference */}
+      <div className="px-6 md:px-12 mb-24 grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-5">
         {project.media.map((m, i) => (
-          <MediaBlock key={`${m.caption}-${i}`} media={m} eager={i === 0} />
+          <div key={`${m.src ?? m.caption ?? "block"}-${i}`} className={SPAN_CLASS[m.span ?? "full"]}>
+            <MediaBlock media={m} eager={i === 0} />
+          </div>
         ))}
       </div>
 
