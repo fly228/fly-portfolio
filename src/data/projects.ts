@@ -12,12 +12,21 @@ export type ProjectStatus = "ready" | "pending-assets";
 export type MediaSpan = "full" | "wide" | "half" | "third";
 
 export interface ProjectMedia {
-  /** "palette" renders a colour-plan strip instead of an image. */
-  type?: "image" | "palette";
+  /**
+   * "palette" renders a colour-plan strip instead of an image.
+   * "heading" renders a full-width section divider — used on multi-case
+   * pages that bundle several clients under one project (e.g. a yearly
+   * round-up) so each case gets its own labelled block within the grid.
+   */
+  type?: "image" | "palette" | "heading";
   /** Path under /public, or null to render a 「待圖」placeholder. */
   src?: string | null;
   /** Colour-plan swatches, hex strings, for type "palette". */
   swatches?: string[];
+  /** For type "heading": small eyebrow line above the label. */
+  label?: string;
+  /** For type "heading": the section title itself. */
+  heading?: string;
   /** Optional; rendered only when non-empty. */
   caption?: string;
   span?: MediaSpan;
@@ -381,6 +390,125 @@ export const projects: Project[] = [
       // 半 + 半:現場與收尾
       { src: "/work/tough-bobas-opening/img-08.jpg", span: "half" },
       { src: "/work/tough-bobas-opening/img-11.jpg", span: "half", caption: "跳起來:年代感的片頭,活著的節目。" },
+    ],
+  },
+  {
+    slug: "web-projects-2020-2021",
+    no: "08",
+    title: "2020–2021 網站專案精選",
+    titleEn: "Website Projects Selected, 2020–2021",
+    category: "Web / UI Design",
+    summary: "三個網站案的介面設計與版型統整。",
+    status: "ready",
+    cover: "/work/web-projects-2020-2021/cover.jpg",
+    client: "賈桃樂主題學期館 / 高雄市政府警察局路竹分駐所 / 台北市政府交通局",
+    role: "網站介面設計",
+    focus: "資訊架構、響應式版型、跨案視覺統整",
+    year: "2020-2021",
+    tools: ["待補"],
+    intro: [
+      "這頁收三個網站案：教育品牌的主題館、警政單位的路竹分駐所後台，還有台北市交通局的綠運輸活動網站——類型不同，但都要在有限的開發資源下把資訊架構理順，做出好用的響應式介面。",
+      "賈桃樂主題學期館做了 A/B 兩版比較，用卡片與表單把課程資訊拆成好選好報名的流程；路竹分駐所後台把地圖、監控與告警收進同一套儀表板語言；綠運輸活動網站則用遊戲化的任務與角色，把減碳行動變成好玩的互動。",
+      "三案都涵蓋桌機到手機的完整介面，色彩與版型各自對應品牌與場域，但共用同一套排版邏輯。",
+    ],
+    media: [
+      { type: "heading", label: "01 — 職涯品牌 × 主題館網站", heading: "賈桃樂主題學期館" },
+      { src: "/work/web-projects-2020-2021/img-01.jpg", span: "full", caption: "A版首頁主視覺:懸浮選單與課程入口一次到位。" },
+      { src: "/work/web-projects-2020-2021/img-02.jpg", span: "half", aspect: "aspect-[1600/4186]", caption: "A版完整頁面:從主視覺到頁尾一次看完整版型。" },
+      { src: "/work/web-projects-2020-2021/img-06.jpg", span: "half", aspect: "aspect-[1600/3697]", caption: "B版完整頁面:改版後的頁面節奏。" },
+      { src: "/work/web-projects-2020-2021/img-03.jpg", span: "half", caption: "課程卡片列表:資訊分類與報名入口。" },
+      { src: "/work/web-projects-2020-2021/img-04.jpg", span: "half", caption: "線上報名表單:欄位拆成好填的步驟。" },
+      { src: "/work/web-projects-2020-2021/img-05.jpg", span: "half", caption: "B版線上預約服務。" },
+      { src: "/work/web-projects-2020-2021/img-07.jpg", span: "half", caption: "後台數據儀表板:報名與流量一眼掌握。" },
+      { src: "/work/web-projects-2020-2021/img-08.jpg", span: "wide", aspect: "aspect-[25/16]", caption: "手機介面:首頁、課程列表與主視覺。" },
+      {
+        type: "palette",
+        span: "third",
+        caption: "色彩計畫:品牌藍到亮黃的六階,教育感的活潑對比。",
+        swatches: ["#0d3a73", "#1557ab", "#4a90d9", "#b9d8ec", "#f7de46", "#fefcef"],
+      },
+      { src: "/work/web-projects-2020-2021/img-09.jpg", span: "full", caption: "影音專區:環境導覽與課程影片。" },
+
+      { type: "heading", label: "02 — 警政單位 × 監控後台", heading: "高雄市政府警察局路竹分駐所" },
+      { src: "/work/web-projects-2020-2021/img-10.jpg", span: "full", aspect: "aspect-[160/61]", caption: "桌面後台介面總覽:地圖、監控與告警收進同一套儀表板。" },
+      { src: "/work/web-projects-2020-2021/img-11.jpg", span: "half", caption: "警政地圖與監控點:全區設備一次掌握。" },
+      { src: "/work/web-projects-2020-2021/img-12.jpg", span: "half", caption: "AI 車輛與物件辨識:即時偵測結果疊在畫面上。" },
+      { src: "/work/web-projects-2020-2021/img-13.jpg", span: "third", aspect: "aspect-[39/80]", caption: "手機登入介面。" },
+      { src: "/work/web-projects-2020-2021/img-14.jpg", span: "third", aspect: "aspect-[39/80]", caption: "手機地圖介面。" },
+      { src: "/work/web-projects-2020-2021/img-15.jpg", span: "third", aspect: "aspect-[39/80]", caption: "手機監視畫面。" },
+      { src: "/work/web-projects-2020-2021/img-16.jpg", span: "third", aspect: "aspect-[39/80]", caption: "手機儀表板。" },
+      {
+        type: "palette",
+        span: "wide",
+        caption: "色彩計畫:近黑到淺灰的六階,警用藍是唯一的高彩度。",
+        swatches: ["#0d1214", "#1a2f3a", "#1a87c0", "#6fb3d6", "#ccc7c2", "#f5f6f8"],
+      },
+
+      { type: "heading", label: "03 — 公部門活動 × 遊戲化網站", heading: "台北市政府交通局 綠運輸活動網站" },
+      { src: "/work/web-projects-2020-2021/img-17.jpg", span: "full", caption: "活動首頁主視覺:綠運輸的角色與插畫定調。" },
+      { src: "/work/web-projects-2020-2021/img-18.jpg", span: "third", aspect: "aspect-[1600/5010]", caption: "完整頁面:從主視覺到頁尾的活動網站全貌。" },
+      { src: "/work/web-projects-2020-2021/img-21.jpg", span: "third", aspect: "aspect-[1/2]", caption: "手機主畫面。" },
+      { src: "/work/web-projects-2020-2021/img-22.jpg", span: "third", aspect: "aspect-[1/2]", caption: "山峰遊戲介面:減碳進度做成攀登地圖。" },
+      { src: "/work/web-projects-2020-2021/img-19.jpg", span: "half", caption: "萬聖節活動:節慶限定的主題頁面。" },
+      { src: "/work/web-projects-2020-2021/img-20.jpg", span: "half", caption: "綠運輸方式:把交通選項變成插畫圖鑑。" },
+      { src: "/work/web-projects-2020-2021/img-23.jpg", span: "third", aspect: "aspect-[1/2]", caption: "碳排狀態:數據做成隨手可看的角色狀態。" },
+      { src: "/work/web-projects-2020-2021/img-24.jpg", span: "third", aspect: "aspect-[1/2]", caption: "任務獎勵彈窗。" },
+      {
+        type: "palette",
+        span: "third",
+        caption: "色彩計畫:深綠到薄荷藍的六階,活動橘是任務獎勵的重點色。",
+        swatches: ["#0d3d2e", "#4a8f5c", "#9cbe6d", "#16e6c4", "#ff8818", "#f5f6f8"],
+      },
+    ],
+  },
+  {
+    slug: "bobateach-app",
+    no: "09",
+    title: "BobaTeach 中文教學 App",
+    titleEn: "BobaTeach — Chinese Learning App",
+    category: "App / Product UI",
+    summary: "遊戲化中文教學 App 的介面與設計系統。",
+    status: "ready",
+    cover: "/work/bobateach-app/cover.jpg",
+    client: "BobaTeach",
+    role: "UI / 視覺設計",
+    focus: "遊戲化學習流程、角色世界觀、設計系統",
+    year: "待補",
+    tools: ["Figma", "After Effects", "Illustrator"],
+    intro: [
+      "教語言的 App 最怕變成無聊的單字表——尤其教的是中文,對外國學習者,光是筆畫與聲調就足以讓人放棄。BobaTeach 的任務,是把「學中文」變成一件會想每天打開的事。",
+      "設計把學習流程包成一場遊戲:可愛角色帶著你在木質地圖上一關一關前進,章節、課程、影片與升級獎勵都收進同一套溫暖的世界觀。介面語言鎖定圓角、地圖插畫與奶茶色調,讓每一步都有回饋感。",
+      "底層是一套完整的設計系統——圖標、字級、狀態色、Tab 導覽到升級動畫流程——讓 App 從商店頁到課程內頁,都是同一個 BobaTeach。",
+    ],
+    media: [
+      // 滿寬開場:App Store 橫幅「step by step」
+      { src: "/work/bobateach-app/img-01.jpg", span: "full", aspect: "aspect-[2778/1284]", caption: "循序漸進學台灣中文:App Store 主視覺。" },
+      // 半 + 半:首頁與章節選擇(同比例)
+      { src: "/work/bobateach-app/img-02.jpg", span: "half", aspect: "aspect-[926/428]", caption: "首頁:角色與世界入口,商店與場景收在下緣。" },
+      { src: "/work/bobateach-app/img-03.jpg", span: "half", aspect: "aspect-[926/428]", caption: "章節選擇:左右滑動的關卡地圖。" },
+      // 三分之二 + 三分之一:升級動畫分鏡(裁去右側大片留白)+ 色彩計畫在右
+      { src: "/work/bobateach-app/img-07.jpg", span: "wide", aspect: "aspect-[1600/617]", caption: "升級動畫流程:一整條分鏡串起升級的節奏。" },
+      {
+        type: "palette",
+        span: "third",
+        caption: "色彩計畫:地圖棕、天空藍到奶油白的六階,珍奶沙色打底,活力橘是回饋重點色。",
+        swatches: ["#7a483f", "#3865a6", "#a4c9fe", "#d6c1a2", "#f7b058", "#fbf7eb"],
+      },
+      // 三等分:地圖旅程 / 章節狀態 / 影片課程(同為直式狀態圖)
+      { src: "/work/bobateach-app/img-04.jpg", span: "third", aspect: "aspect-[966/1364]", caption: "學習地圖:一關一關往前的旅程狀態。" },
+      { src: "/work/bobateach-app/img-05.jpg", span: "third", aspect: "aspect-[966/1437]", caption: "章節切換:鎖定與解鎖的三種狀態。" },
+      { src: "/work/bobateach-app/img-06.jpg", span: "third", aspect: "aspect-[966/1364]", caption: "影片課程:看片、獎勵結算與重看。" },
+      // 滿寬:產品流程圖(彈窗跳轉地圖,資訊量大,獨立滿版好讀)
+      { src: "/work/bobateach-app/img-08.jpg", span: "full", aspect: "aspect-[1600/1816]", caption: "產品流程:彈窗與畫面之間的跳轉地圖。" },
+      // 收尾段落:官網影片截圖,依影片時間序排列,最後以品牌收尾卡滿版做結
+      { type: "heading", label: "官網影片", heading: "把品牌,演成一支影片。" },
+      { src: "/work/bobateach-app/img-14.jpg", span: "third", aspect: "aspect-[1600/900]", caption: "開場:兩位主持人與吉祥物一起打招呼。" },
+      { src: "/work/bobateach-app/img-15.jpg", span: "third", aspect: "aspect-[1600/900]", caption: "可理解輸入:手機情境疊加互動小遊戲。" },
+      { src: "/work/bobateach-app/img-16.jpg", span: "third", aspect: "aspect-[1600/900]", caption: "隨處學習:海邊也能滑手機上課。" },
+      { src: "/work/bobateach-app/img-17.jpg", span: "third", aspect: "aspect-[1600/900]", caption: "角色反應:誇張表情拉近教學距離。" },
+      { src: "/work/bobateach-app/img-18.jpg", span: "third", aspect: "aspect-[1600/900]", caption: "文化情境:廟宇香爐,把日常文化帶進課程。" },
+      { src: "/work/bobateach-app/img-19.jpg", span: "third", aspect: "aspect-[1600/900]", caption: "內容宇宙:影片、圖片、課本收進同一個世界。" },
+      { src: "/work/bobateach-app/img-20.jpg", span: "full", aspect: "aspect-[1600/900]", caption: "品牌收尾:Boba Teach,學中文的夥伴。" },
     ],
   },
 ];

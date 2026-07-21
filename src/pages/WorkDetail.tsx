@@ -42,6 +42,20 @@ function PaletteBlock({ media }: { media: ProjectMedia }) {
   );
 }
 
+/** Section divider for multi-case pages — a labelled break in the grid. */
+function HeadingBlock({ media }: { media: ProjectMedia }) {
+  return (
+    <div className="pt-8 md:pt-14 pb-1 border-t border-ink/10">
+      {media.label ? (
+        <p className="text-xs text-ink/40 tracking-wide mb-1">{media.label}</p>
+      ) : null}
+      <h3 className="text-xl md:text-2xl font-medium tracking-normal">
+        {media.heading}
+      </h3>
+    </div>
+  );
+}
+
 function isLight(hex: string): boolean {
   const n = parseInt(hex.slice(1), 16);
   const r = (n >> 16) & 255;
@@ -52,6 +66,7 @@ function isLight(hex: string): boolean {
 
 function MediaBlock({ media, eager = false }: { media: ProjectMedia; eager?: boolean }) {
   const aspect = media.aspect ?? "aspect-video";
+  if (media.type === "heading") return <HeadingBlock media={media} />;
   if (media.type === "palette") return <PaletteBlock media={media} />;
   return (
     <figure className="h-full flex flex-col">
