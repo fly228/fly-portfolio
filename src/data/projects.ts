@@ -165,7 +165,7 @@ export const projects: Project[] = [
     client: "國立歷史博物館",
     role: "美術指導 / Style Frames",
     focus: "敘事分段、時代畫面語言、超寬畫幅構圖",
-    year: "待補",
+    year: "2019",
     tools: ["After Effects", "Photoshop"],
     intro: [
       "入口影片是觀眾對博物館的第一印象：要把台灣一百年的故事壓進一條超寬畫幅，最難的是取捨——哪些時代成為畫面，哪些只是過場。",
@@ -258,7 +258,7 @@ export const projects: Project[] = [
     client: "Acer",
     role: "動態視覺 / Style Frames",
     focus: "光線語言、節奏分段、品牌幾何轉譯",
-    year: "待補",
+    year: "2019",
     tools: ["After Effects", "Illustrator"],
     intro: [
       "發表會開場影片只有一個任務：在燈暗下來的幾十秒裡，把全場的注意力收攏到舞台上。",
@@ -309,7 +309,7 @@ export const projects: Project[] = [
     client: "ASUS",
     role: "動態視覺 / Style Frames",
     focus: "產品質感、功能圖解、黑金光線語言",
-    year: "待補",
+    year: "2019",
     tools: ["After Effects", "Cinema 4D"],
     intro: [
       "路由器的規格表很長，影片只有幾十秒：哪些功能成為章節，怎麼把頻寬、防護這些抽象概念變成看得見的畫面，是這支片的核心工作。",
@@ -357,7 +357,7 @@ export const projects: Project[] = [
     client: "We are Tough Bobas",
     role: "動態設計 / 美術",
     focus: "年代感美術、拼貼動畫、片頭節奏",
-    year: "待補",
+    year: "2022",
     tools: ["After Effects", "Photoshop"],
     videoUrl: "https://vimeo.com/682172215",
     intro: [
@@ -473,7 +473,7 @@ export const projects: Project[] = [
     client: "BobaTeach",
     role: "UI / 視覺設計",
     focus: "遊戲化學習流程、角色世界觀、設計系統",
-    year: "待補",
+    year: "2025-2026",
     tools: ["Figma", "After Effects", "Illustrator"],
     intro: [
       "教語言的 App 最怕變成無聊的單字表——尤其教的是中文,對外國學習者,光是筆畫與聲調就足以讓人放棄。BobaTeach 的任務,是把「學中文」變成一件會想每天打開的事。",
@@ -508,7 +508,6 @@ export const projects: Project[] = [
       { src: "/work/bobateach-app/img-17.jpg", span: "third", aspect: "aspect-[1600/900]", caption: "角色反應:誇張表情拉近教學距離。" },
       { src: "/work/bobateach-app/img-18.jpg", span: "third", aspect: "aspect-[1600/900]", caption: "文化情境:廟宇香爐,把日常文化帶進課程。" },
       { src: "/work/bobateach-app/img-19.jpg", span: "third", aspect: "aspect-[1600/900]", caption: "內容宇宙:影片、圖片、課本收進同一個世界。" },
-      { src: "/work/bobateach-app/img-20.jpg", span: "full", aspect: "aspect-[1600/900]", caption: "品牌收尾:Boba Teach,學中文的夥伴。" },
     ],
   },
 ];
